@@ -1,22 +1,57 @@
 package org.example;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-//        marsRover marsRover= new marsRover();
+        marsRover marsRover= new marsRover();
+
+        //NEW
+        Rover rover= new Rover();
+
+        String plataeuString=InputParser.getUserPlateauSize();
+        String getPositionString= InputParser.getPosition();
+        String getInstructionsString= InputParser.getInstructions();
+
+        //-----------Rover input parser ------------
+        InputParser parser= new InputParser(plataeuString, getInstructionsString, getPositionString);
+
+        rover.position= parser.position;
+
+        rover.plateauSize= parser.plateauSize;
+
+        for (Instruction instruction : parser.instructions){
+            if (instruction.equals(Instruction.L) || instruction.equals(Instruction.R) ){
+                rover.rotate(instruction);
+            }
+            else if (instruction.equals(Instruction.M)) {
+                rover.move();
+            }
+        }
+
+        System.out.println(rover.position + " current position");
+
+
 //        Scanner scanner= new Scanner(System.in);
 //
 //        //Plateau input-------------------------------
 //        boolean isPlateauNumber=true;
-//        String firstPlatSize= "";
-//        String secondPlatSize= "";
+////        String firstPlatSize= "";
+////        String secondPlatSize= "";
+//
+//        int firstPlatSize= 0;
+//        int secondPlatSize= 0;
 //
 //        while(isPlateauNumber){
 //            try{
 //                System.out.println("enter how high u want ur plat size to be ");
-//                    firstPlatSize= String.valueOf(scanner.nextInt());
+////                    firstPlatSize= String.valueOf(scanner.nextInt());
+//                    firstPlatSize= scanner.nextInt();
 //                System.out.println("enter how wide u want ur plat size to be ");
-//                    secondPlatSize= String.valueOf(scanner.nextInt());
+////                    secondPlatSize= String.valueOf(scanner.nextInt());
+//                    secondPlatSize=scanner.nextInt();
 //                isPlateauNumber= false;
 //
 //            }catch (InputMismatchException e){
@@ -29,8 +64,16 @@ public class Main {
 //        marsRover.plateauSize= firstPlatSize + " " + secondPlatSize;
 //        System.out.println(marsRover.plateauSize);
 //
-//        //Starting Position-------------------------------
-//
+////        to pass on to input parser can we not do below
+////        PlateauSize plateauSize= new PlateauSize(firstPlatSize, secondPlatSize);
+////        InputParser inputParser= new InputParser();
+
+
+
+
+
+        //Starting Position-------------------------------
+
 //        boolean isCoordInput=true;
 //        String firstCoord= "";
 //        String secondCoord= "";
@@ -73,16 +116,15 @@ public class Main {
 //        marsRover.coordY= Integer.parseInt(secondCoord);
 //
 //        marsRover.position= marsRover.coordX + " " + marsRover.coordY + " " + marsRover.facePosition;
-//
+
 //        System.out.println("enter the directions you want to move e.g. (MLLR)");
 //        marsRover.directions= scanner.next();
-//
+
 //        marsRover.move();
 //
 //        System.out.println(marsRover.position);
 
-//        Rover rover = new Rover();
-//
+
 //        System.out.println("enter the directions you want to move e.g. (MLLR)");
 //
 //        String directions = "LRRMR";
@@ -90,31 +132,14 @@ public class Main {
 //            String direction = directions.substring(i, i + 1);
 //
 //            if (direction.equals("M")) {
-//                rover.moveRover();
+//                rover.move();
 //            } else if (direction.equals("L") || direction.equals("R")) {
-//                rover.rotate(direction);
+//                rover.rotate(Instruction.valueOf(directions));
 //            }
 //        }
 
 
-        //-----------Rover input parser ------------
-        InputParser.getUserPlateauSize();
-        InputParser parser= new InputParser("5 5", "MLLMMM", "2 4 N");
 
-        Rover rover = new Rover();
-
-        rover.position= parser.position;
-
-        for (Instruction instruction : parser.instructions){
-            if (instruction.equals(Instruction.L) || instruction.equals(Instruction.R) ){
-                rover.rotate(instruction);
-            }
-            else if (instruction.equals(Instruction.M)) {
-                rover.move();
-            }
-        }
-
-        System.out.println(rover.position);
 
 
 

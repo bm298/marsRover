@@ -3,25 +3,33 @@ package org.example;
 public class Rover {
 
     Position position;
+    PlateauSize plateauSize;
 
     public void move(){
         switch (position.facing) {
             case CompassDirection.N:
-                position.Y+=1;
+                if (this.checkYBoundary(this.position.Y+1)) {
+                    position.Y += 1;
+                }
                 break;
 
             case CompassDirection.S:
-                position.Y-=1;
+                if (this.checkYBoundary(this.position.Y-1)) {
+                    position.Y -= 1;
+                }
                 break;
 
             case CompassDirection.E:
-                position.X+=1;
+                if (this.checkXBoundary(this.position.X+1)) {
+                    position.X += 1;
+                }
                 break;
 
             case CompassDirection.W:
-                position.X-=1;
+                if (this.checkXBoundary(this.position.X-1)) {
+                    position.X -= 1;
+                }
                 break;
-
         }
     }
 
@@ -60,5 +68,29 @@ public class Rover {
                 break;
         }
     }
+
+    public boolean checkXBoundary(int newX){
+
+        int Xmax= plateauSize.width;
+        int Xmin= 0;
+
+        if (Xmax < newX || newX< Xmin) {
+            System.out.println("co-ord X is out of bounds...!");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkYBoundary(int newY) {
+        int Ymax = plateauSize.height;
+        int Ymin= 0;
+
+        if (Ymax < newY || newY < Ymin) {
+            System.out.println("co-ord Y is out of bounds...!");
+            return false;
+        }
+        return true;
+    }
+
 
 }
